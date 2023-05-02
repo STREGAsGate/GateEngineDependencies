@@ -12,6 +12,7 @@ var targets: [Target] {
     array.append(
         .target(name: "TrueType",
                 cSettings: [
+                    .unsafeFlags(["-Wno-everything"]),
                     .define("STB_TRUETYPE_IMPLEMENTATION"), .define("STB_RECT_PACK_IMPLEMENTATION"),
                     .define("extern", to: "__declspec(dllexport) extern", .when(platforms: [.windows])),
                     .define("_CRT_SECURE_NO_WARNINGS", .when(platforms: [.windows])), // Silence warnings
@@ -26,12 +27,13 @@ var targets: [Target] {
     array.append(
         .target(name: "libspng",
                 cSettings: [
+                    .unsafeFlags(["-Wno-everything"]),
                     .define("SPNG_USE_MINIZ"),
                     .define("extern", to: "__declspec(dllexport) extern", .when(platforms: [.windows])),
                     .define("_CRT_SECURE_NO_WARNINGS", .when(platforms: [.windows])), // Silence warnings
                 ],
                 linkerSettings: [
-                    // SR-14728
+                    // SR-14728\
                     .linkedLibrary("swiftCore", .when(platforms: [.windows])),
                 ])
     )
@@ -41,7 +43,11 @@ var targets: [Target] {
         .target(name: "Vorbis",
                 publicHeadersPath: "include",
                 cSettings: [
+                    .unsafeFlags(["-Wno-everything"]),
                     .define("extern", to: "__declspec(dllexport) extern", .when(platforms: [.windows]))
+                ],
+                swiftSettings: [
+                    .unsafeFlags(["-wall"]),
                 ],
                 linkerSettings: [
                     // SR-14728
